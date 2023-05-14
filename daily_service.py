@@ -2,6 +2,8 @@
 from datetime import datetime, timedelta
 from dateutil import relativedelta
 import boto3
+
+
 # import pytz
 
 
@@ -15,10 +17,7 @@ class DailyCostsBills:
             self._cloud_watch_client = boto3.client("cloudwatch")
         return self._cloud_watch_client
 
-    def get_total_daily_cost(self):
-        end_time = datetime.now()
-        start_time = end_time - timedelta(hours=24)
-
+    def get_total_cost(self, start_time, end_time):
         responce = self.cloud_watch_client.get_metric_statistics(
             Namespace='AWS/Billing',
             MetricName='EstimatedCharges',

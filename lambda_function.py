@@ -1,5 +1,9 @@
 import json
+from datetime import datetime, timedelta
+
 import requests
+from dateutil.relativedelta import relativedelta
+
 from daily_service import DailyCostsBills
 
 day_bills = DailyCostsBills()
@@ -8,15 +12,29 @@ day_bills = DailyCostsBills()
 def lambda_handler(event, context):
     try:
         url_slack = "https://hooks.slack.com/services/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"
-        day_cost = day_bills.get_total_daily_cost()
 
-        payload = {"text": f"Total last 24 hours cost: {day_cost} USD"}
-        requests.post(
-            url=url_slack,
-            data=json.dumps(payload),
-            headers={'Content-Type': 'application/json'}
-        )
+        # definition timepoints for calc periods
+        current_time = datetime.now()
+        start_time = current_time - timedelta(hours=24)
+        start_of_prev_month = (current_time - relativedelta(months=1)).replace(day=1)
+        end_of_prev_month = start_of_prev_month.replace(day=1) - relativedelta(days=1)
+
+        # calculate costs in USD
+        today_cost = day_bills.get_total_cost(start_time, current_time)
+        prev_month = day_bills.get_total_cost(start_of_prev_month, end_of_prev_month)
+
+        payload = {"text": f"Total last 24 hours cost: {today_cost} USD \n \
+                            Previous month {prev_month} USD"
+                   }
+        # Print results LOCALLY
+        print(payload['text'])
+
+        # Sending to Slack group
+        # requests.post(
+        #     url=url_slack,
+        #     data=json.dumps(payload),
+        #     headers={'Content-Type': 'application/json'}
+        # )
 
     except Exception as e:
         return str(e)
-
