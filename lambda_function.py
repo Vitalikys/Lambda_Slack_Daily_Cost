@@ -13,7 +13,7 @@ def lambda_handler(event, context):
     try:
         url_slack = "https://hooks.slack.com/services/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"
 
-        # definition timepoints for calc periods-s
+        # definition timepoints for calc periods
         current_time = datetime.now()
         start_time = current_time - timedelta(hours=24)
         start_of_prev_month = (current_time - relativedelta(months=1)).replace(day=1)
