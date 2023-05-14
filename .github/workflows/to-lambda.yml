@@ -1,0 +1,23 @@
+name: CI-CD-Lambda-Day-Costs
+env: 
+  S3_BUCKET_NAME  : "test-lambda-vitalii"
+  PACKAGE_NAME    : "calculate_costs_from_GIT.zip"
+  
+on: 
+  push:
+    branches: "master"
+
+jobs: 
+  ci_part:
+     runs-on: ubuntu-latest     
+     steps:
+     - name: Git clone my repo
+       uses: actions/checkout@v3.5.2
+       with:   # optional, default is
+         repository: ${{ github.repository }}
+         
+     - name: install requirements, print list files
+       run: |
+         pip install -r rerequirements.txt --target . 
+         ls -la
+ 
