@@ -13,7 +13,7 @@ def lambda_handler(event, context):
     try:
         url_slack = "https://hooks.slack.com/services/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"
 
-        # definition timepoints for calc periods
+        # definition timepoints for calc periods-s
         current_time = datetime.now()
         start_time = current_time - timedelta(hours=24)
         start_of_prev_month = (current_time - relativedelta(months=1)).replace(day=1)
@@ -31,7 +31,7 @@ def lambda_handler(event, context):
 
         # Sending to Slack group
         # requests.post(
-        #     url=url_slack,
+        #     url=url_slack,-
         #     data=json.dumps(payload),
         #     headers={'Content-Type': 'application/json'}
         # )
