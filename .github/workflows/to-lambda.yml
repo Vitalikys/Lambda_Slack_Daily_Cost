@@ -18,6 +18,6 @@ jobs:
          
      - name: install requirements, print list files
        run: |
-         pip install -r rerequirements.txt --target . 
+         pip install -r requirements.txt --target . 
          ls -la
  
