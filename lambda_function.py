@@ -23,18 +23,18 @@ def lambda_handler(event, context):
         today_cost = day_bills.get_total_cost(start_time_last24h, current_time)
         prev_month = day_bills.get_total_cost(start_of_prev_month, end_of_prev_month)
 
-        payload = {"text": f"Total last 24 hours cost: {today_cost} USD \n \
-                            Previous month: {prev_month} USD"
+        payload = {"text": f"Total (last 24 hours) cost: {today_cost} USD \n \
+                            Previous month: {start_of_prev_month.strftime('%B')} - {prev_month} USD"
                    }
         # Print results LOCALLY
-        print(payload['text'])
+        # print(payload['text'])
 
         # Sending to Slack group
-        # requests.post(
-        #     url=url_slack,-
-        #     data=json.dumps(payload),
-        #     headers={'Content-Type': 'application/json'}
-        # )
+        requests.post(
+            url=url_slack,
+            data=json.dumps(payload),
+            headers={'Content-Type': 'application/json'}
+        )
 
     except Exception as e:
         return str(e)
