@@ -1,7 +1,9 @@
 name: CI-CD-Lambda-Day-Costs
 env: 
   S3_BUCKET_NAME  : "test-lambda-vitalii"
-  PACKAGE_NAME    : "calculate_costs_from_GIT.zip"
+  PACKAGE_NAME    : "calculate_costs_from_GIT_actions.zip"
+  AWS_REGION_NAME : "us-east-1"
+  AWS_LAMBDA_FUNCTION_NAME: test-lambda-vitalii
   
 on: 
   push:
@@ -16,8 +18,29 @@ jobs:
        with:   # optional, default is
          repository: ${{ github.repository }}
          
-     - name: install requirements, print list files
+     - name: Install requirements, print list files
        run: |
          pip install -r requirements.txt --target . 
          ls -la
+         
+     - name: Create ZIP deployment file
+       run : zip -r ${{ env.PACKAGE_NAME }} ./ -x *.git* *.dist-info
+       
+     - name: Configure my AWS Credentials For GitHub Actions
+       uses: aws-actions/configure-aws-credentials@v2
+       with:
+        aws-access-key-id    :  ${{ secrets.MY_AWS_ACCESS_KEY }}
+        aws-secret-access-key:  ${{ secrets.MY_AWS_SECRET_ACCESS_KEY }}
+        aws-region           :  ${{ env.AWS_REGION_NAME }}
+     - name: Copy Deployment package to S3 bucket
+       run: aws s3 cp ${{ env.PACKAGE_NAME }} s3://${{ env.S3_BUCKET_NAME }}
+            echo "Zip Package Successfully copied to S3"
+     - name: Update Lambda Function from s3
+       run : |
+        aws lambda update-function-code \
+        --function-name ${{ env.AWS_LAMBDA_FUNCTION_NAME }} \
+        --s3-bucket ${{ env.S3_BUCKET_NAME }} \
+        --s3-key  ${{ env.PACKAGE_NAME }} 
+     - name: Print Status Message 
+       run : echo "Function Updated Succesfully"
  
