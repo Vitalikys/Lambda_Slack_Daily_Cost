@@ -11,7 +11,7 @@ day_bills = DailyCostsBills()
 
 def lambda_handler(event, context):
     try:
-        url_slack = "https://hooks.slack.com/services/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"
+        url_slack = "https://hooks.slack.com/services/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"
 
         # definition timepoints for calc periods
         current_time = datetime.now()
