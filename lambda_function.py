@@ -15,16 +15,16 @@ def lambda_handler(event, context):
 
         # definition timepoints for calc periods
         current_time = datetime.now()
-        start_time = current_time - timedelta(hours=24)
-        start_of_prev_month = (current_time - relativedelta(months=1)).replace(day=1)
-        end_of_prev_month = start_of_prev_month.replace(day=1) - relativedelta(days=1)
+        start_time_last24h = current_time - timedelta(hours=24)
+        start_of_prev_month = (current_time - relativedelta(months=1)).replace(day=1, hour=0, minute=0)
+        end_of_prev_month = start_of_prev_month.replace(day=1, hour=0, minute=0) + relativedelta(months=1)
 
         # calculate costs in USD
-        today_cost = day_bills.get_total_cost(start_time, current_time)
+        today_cost = day_bills.get_total_cost(start_time_last24h, current_time)
         prev_month = day_bills.get_total_cost(start_of_prev_month, end_of_prev_month)
 
         payload = {"text": f"Total last 24 hours cost: {today_cost} USD \n \
-                            Previous month {prev_month} USD"
+                            Previous month: {prev_month} USD"
                    }
         # Print results LOCALLY
         print(payload['text'])
