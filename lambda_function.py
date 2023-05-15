@@ -11,7 +11,7 @@ day_bills = DailyCostsBills()
 
 def lambda_handler(event, context):
     try:
-        url_slack = "https://hooks.slack.com/services/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"
+        url_slack = "https://hooks.slack.com/services/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"
 
         # definition timepoints for calc periods
         current_time = datetime.now()
@@ -27,7 +27,8 @@ def lambda_handler(event, context):
                             Previous month: {start_of_prev_month.strftime('%B')} - {prev_month} USD"
                    }
         # Print results LOCALLY
-        # print(payload['text'])
+        print('Printing PAYLOAD: ')
+        print(payload['text'])
 
         # Sending to Slack group
         requests.post(
