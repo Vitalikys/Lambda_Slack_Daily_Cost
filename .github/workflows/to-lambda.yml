@@ -33,8 +33,10 @@ jobs:
         aws-secret-access-key:  ${{ secrets.MY_AWS_SECRET_ACCESS_KEY }}
         aws-region           :  ${{ env.AWS_REGION_NAME }}
      - name: Copy Deployment package to S3 bucket
-       run: aws s3 cp ${{ env.PACKAGE_NAME }} s3://${{ env.S3_BUCKET_NAME }}
-            echo "Zip Package Successfully copied to S3"
+       run: |
+         aws s3 cp ${{ env.PACKAGE_NAME }} s3://${{ env.S3_BUCKET_NAME }}
+         echo "Zip Package Successfully copied to S3"
+         ls -la
      - name: Update Lambda Function from s3
        run : |
         aws lambda update-function-code \
