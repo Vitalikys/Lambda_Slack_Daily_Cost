@@ -23,12 +23,13 @@ def lambda_handler(event, context):
         prev_month = day_bills.get_total_cost(start_of_prev_month, end_of_prev_month)
 
         payload = {"text": f"{current_time.strftime('%d %B %Y')} Last 24 hours cost : {today_cost} USD \n \
-                            Previous month: {start_of_prev_month.strftime('%B')} - {prev_month} USD"
+        Previous month: {start_of_prev_month.strftime('%B')} - {prev_month} USD"
                    }
         # Print results LOCALLY
-        print('--------- Printing PAYLOAD: -------------')
-        print(payload['text'])
-        print('ENV url_slack', url_slack)
+        print('--------- Printing DATES: -------------')
+        print('---- start - End prev month: ', start_of_prev_month)
+        print('End prev month', end_of_prev_month)
+        print('cost Prev month', prev_month)
 
         # Sending to Slack group
         requests.post(

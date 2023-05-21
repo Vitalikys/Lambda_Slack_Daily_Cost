@@ -27,7 +27,7 @@ class DailyCostsBills:
             }],
             StartTime=start_time,
             EndTime=end_time,
-            Period=48660,
+            Period=43200,
             # Statistics= ['Sum']# ['Maximum'] # Average
             Statistics=['Maximum']  # Average
         )
