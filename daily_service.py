@@ -1,10 +1,5 @@
 # Создать на лямбде приложение, которое считает ежедневные затраты денег по аккаунту и шлет отчет в слак
-from datetime import datetime, timedelta
-from dateutil import relativedelta
 import boto3
-
-
-# import pytz
 
 
 class DailyCostsBills:
@@ -27,12 +22,11 @@ class DailyCostsBills:
             }],
             StartTime=start_time,
             EndTime=end_time,
-            Period=43200,
-            # Statistics= ['Sum']# ['Maximum'] # Average
-            Statistics=['Maximum']  # Average
+            # Period=43200, # 12 hours
+            Period=86400,  # 24 hours
+            Statistics=['Maximum']  # ['Sum']  Average
         )
         day_costs = 0
-        print('responce', responce)
 
         data_points = responce["Datapoints"]
         if len(data_points) == 0:
