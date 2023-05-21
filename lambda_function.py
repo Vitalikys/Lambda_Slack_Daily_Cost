@@ -1,6 +1,6 @@
 import json
 from datetime import datetime, timedelta
-
+import os
 import requests
 from dateutil.relativedelta import relativedelta
 
@@ -11,8 +11,7 @@ day_bills = DailyCostsBills()
 
 def lambda_handler(event, context):
     try:
-        url_slack = "https://hooks.slack.com/services/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"
-
+        url_slack = os.environ['SLACK_URL']
         # definition timepoints for calc periods
         current_time = datetime.now()
         start_time_last24h = current_time - timedelta(hours=24)
@@ -23,12 +22,13 @@ def lambda_handler(event, context):
         today_cost = day_bills.get_total_cost(start_time_last24h, current_time)
         prev_month = day_bills.get_total_cost(start_of_prev_month, end_of_prev_month)
 
-        payload = {"text": f"Total (last 24 hours) cost: {today_cost} USD \n \
+        payload = {"text": f"{current_time.strftime('%d %B %Y')} Last 24 hours cost : {today_cost} USD \n \
                             Previous month: {start_of_prev_month.strftime('%B')} - {prev_month} USD"
                    }
         # Print results LOCALLY
-        print('Printing PAYLOAD: ')
+        print('--------- Printing PAYLOAD: -------------')
         print(payload['text'])
+        print('ENV url_slack', url_slack)
 
         # Sending to Slack group
         requests.post(
