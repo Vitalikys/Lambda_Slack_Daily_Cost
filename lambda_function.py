@@ -27,8 +27,7 @@ def lambda_handler(event, context):
         prev_month_cost = day_bills.get_total_cost(start_of_prev_month, end_of_prev_month)
         current_month   = day_bills.get_total_cost(end_of_prev_month, current_time)
 
-        payload = {"text": f" Execution Time: {current_time.strftime('%d %B %Y  %H:%M:%S')} \
-        \
+        payload = {"text": f" Execution Time: {current_time.strftime('%d %B %Y  %H:%M:%S')} \n \n \
         Last 24 hours ({current_time.strftime('%d %B')}): {today_cost} USD \n \
         Yesterday : {yesterd_cost} USD \n\
         Current month ({current_time.strftime('%B')}): {current_month} USD \n \

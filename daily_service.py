@@ -22,8 +22,8 @@ class DailyCostsBills:
             }],
             StartTime=start_time,
             EndTime=end_time,
-            # Period=43200, # 12 hours
-            Period=86400,  # 24 hours
+            Period=43200, # 12 hours
+            # Period=86400,  # 24 hours
             Statistics=['Maximum']  # ['Sum']  Average
         )
         day_costs = 0
@@ -33,4 +33,4 @@ class DailyCostsBills:
             return day_costs
         for item in data_points:
             day_costs += item["Maximum"]
-        return day_costs
+        return round(day_costs, 2)
