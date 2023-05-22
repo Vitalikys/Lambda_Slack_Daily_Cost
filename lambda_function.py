@@ -33,7 +33,7 @@ def lambda_handler(event, context):
         Last 24 hours ({current_time.strftime('%d %B')}): {today_cost} USD \n\
         Yesterday ({yesterday_start.strftime('%d %B')}) : {yesterd_cost} USD \n\
         Current month  ({current_time.strftime('%B')}): {current_month} USD \n\
-        Previous month ({start_of_prev_month.strftime('%B')}): {prev_month_cost} USD \
+        Previous month ({start_of_prev_month.strftime('%B')}): {prev_month_cost} USD \n\
         ID acc: {lambda_arn}"
 
                    }

@@ -26,7 +26,8 @@ class DailyCostsBills:
             # Period=21600,  # 6 hours
             # Period=43200, # 12 hours
             # Period=86400,  # 24 hours
-            Statistics=['Maximum']  # ['Sum']  Average
+            # Statistics=['Maximum']  # ['Sum']  Average
+            Statistics=['Average']
         )
         day_costs = 0
 
@@ -34,5 +35,5 @@ class DailyCostsBills:
         if len(data_points) == 0:
             return day_costs
         for item in data_points:
-            day_costs += item["Maximum"]
+            day_costs += item["Average"]
         return round(day_costs, 2)
