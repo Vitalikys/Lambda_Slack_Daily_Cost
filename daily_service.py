@@ -22,7 +22,8 @@ class DailyCostsBills:
             }],
             StartTime=start_time,
             EndTime=end_time,
-            Period=1800,  # 0.5 hours
+            # Period=1800,  # 0.5 hours
+            Period=3600,  # 1 hours
             # Period=21600,  # 6 hours
             # Period=43200, # 12 hours
             # Period=86400,  # 24 hours
@@ -32,6 +33,9 @@ class DailyCostsBills:
         day_costs = 0
 
         data_points = responce["Datapoints"]
+        print('--'*20, 'start Datapoints')
+        print(data_points)
+        print('--'*27)
         if len(data_points) == 0:
             return day_costs
         for item in data_points:
