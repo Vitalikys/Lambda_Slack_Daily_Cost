@@ -12,7 +12,7 @@ url_slack = os.environ['SLACK_URL']
 
 def lambda_handler(event, context):
     try:
-        # get ID
+        # get account ID
         lambda_arn = context.invoked_function_arn.split(':')[-3]
         # definition timepoints for calc periods
         current_time       = datetime.now()
@@ -34,7 +34,7 @@ def lambda_handler(event, context):
         Yesterday ({yesterday_start.strftime('%d %B')}) : {yesterd_cost} USD \n\
         Current month  ({current_time.strftime('%B')}): {current_month} USD \n\
         Previous month ({start_of_prev_month.strftime('%B')}): {prev_month_cost} USD \n\
-        ID acc: {lambda_arn}"
+        account ID: {lambda_arn}"
                    }
         # Print timePoints LOCALLY
         print('--------- Printing DATES - TimePoints: -------------')
