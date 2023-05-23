@@ -3,6 +3,9 @@ import boto3
 
 
 class DailyCostsBills:
+    """
+    Class to calculate AWS costs, using period of two time points
+    """
     def __init__(self, region="us-east-1"):
         self._cloud_watch_client = None
         self.region = region
@@ -14,6 +17,12 @@ class DailyCostsBills:
         return self._cloud_watch_client
 
     def get_total_cost(self, start_time, end_time):
+        """
+        method to calculate AWS costs between two points
+        :param start_time: start time point
+        :param end_time: end time point
+        :return: sum of all Datapoints
+        """
         responce = self.cloud_watch_client.get_metric_statistics(
             Namespace='AWS/Billing',
             MetricName='EstimatedCharges',
@@ -23,8 +32,8 @@ class DailyCostsBills:
             }],
             StartTime=start_time,
             EndTime=end_time,
-            # Period=1800,  # 0.5 hours
-            # Period=3600,  # 1 hours
+            # Period=1800,  # 0.5 hours  # in result would be maximum 4 points
+            # Period=3600,  # 1 hours    # in result would be maximum 4 points
             Period=21600,  # 6 hours
             # Period=43200, # 12 hours
             # Period=86400,  # 24 hours
@@ -32,14 +41,17 @@ class DailyCostsBills:
             # Statistics=['Average']
         )
         day_costs = 0
-
         data_points = responce["Datapoints"]
+
         print( '\n----start:', start_time, 'start printing Datapoints----')
-        print('--- count of all points:', len(data_points))
+        print('count of all points:', len(data_points)) # print for debugging
+
+        # Main part to calculate sum of Datapoints
         if len(data_points) == 0:
             return day_costs
         for item in data_points:
-            print(item["Maximum"], end=' ')
+            print(item["Maximum"], end=' ')  # print for debugging
             day_costs += item["Maximum"]
-        print('----END Datapoints------')
+
+        print('\n----END of Datapoints------\n')
         return round(day_costs, 2)
