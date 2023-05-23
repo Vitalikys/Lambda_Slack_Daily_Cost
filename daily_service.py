@@ -3,13 +3,14 @@ import boto3
 
 
 class DailyCostsBills:
-    def __init__(self):
+    def __init__(self, region="us-east-1"):
         self._cloud_watch_client = None
+        self.region = region
 
     @property
     def cloud_watch_client(self):
         if not self._cloud_watch_client:
-            self._cloud_watch_client = boto3.client("cloudwatch")
+            self._cloud_watch_client = boto3.client("cloudwatch", region_name=self.region)
         return self._cloud_watch_client
 
     def get_total_cost(self, start_time, end_time):
@@ -27,17 +28,17 @@ class DailyCostsBills:
             # Period=21600,  # 6 hours
             # Period=43200, # 12 hours
             # Period=86400,  # 24 hours
-            # Statistics=['Maximum']  # ['Sum']  Average
+            # Statistics=['Maximum']  # ['Sum']
             Statistics=['Average']
         )
         day_costs = 0
 
         data_points = responce["Datapoints"]
-        print('--'*20, 'start Datapoints')
-        print(data_points)
-        print('--'*27)
+        print('--'*10, 'start:', start_time, 'start printing Datapoints')
         if len(data_points) == 0:
             return day_costs
         for item in data_points:
+            print(item["Average"])
             day_costs += item["Average"]
+        print('--'*27, 'END Datapoints')
         return round(day_costs, 2)
