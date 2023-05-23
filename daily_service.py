@@ -24,8 +24,8 @@ class DailyCostsBills:
             StartTime=start_time,
             EndTime=end_time,
             # Period=1800,  # 0.5 hours
-            Period=3600,  # 1 hours
-            # Period=21600,  # 6 hours
+            # Period=3600,  # 1 hours
+            Period=21600,  # 6 hours
             # Period=43200, # 12 hours
             # Period=86400,  # 24 hours
             Statistics=['Maximum']  # ['Sum']
@@ -34,12 +34,12 @@ class DailyCostsBills:
         day_costs = 0
 
         data_points = responce["Datapoints"]
-        print('\n--'*10, 'start:', start_time, 'start printing Datapoints----')
-        print('count all points:', len(data_points))
+        print( '\n----start:', start_time, 'start printing Datapoints----')
+        print('--- count of all points:', len(data_points))
         if len(data_points) == 0:
             return day_costs
         for item in data_points:
-            print(item["Maximum"], end=';')
+            print(item["Maximum"], end=' ')
             day_costs += item["Maximum"]
-        print('--'*10, 'END Datapoints------')
+        print('----END Datapoints------')
         return round(day_costs, 2)
