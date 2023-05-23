@@ -39,7 +39,7 @@ class DailyCostsBills:
         if len(data_points) == 0:
             return day_costs
         for item in data_points:
-            print(item["Average"], end=', ')
-            day_costs += item["Average"]
+            print(item["Maximum"], end=';')
+            day_costs += item["Maximum"]
         print('--'*10, 'END Datapoints------')
         return round(day_costs, 2)
