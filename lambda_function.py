@@ -38,6 +38,12 @@ def lambda_handler(event, context):
         current_month   = calculate(current_time)
         prev_month_cost = calculate(end_for_prev_month)
 
+        # If 01 day of month
+        if yesterd_cost_end > today_cost_end:
+            yesterd_cost_end, two_days_ago_cost_end = 0, 0
+        if two_days_ago_cost_end > yesterday_ends_time:
+            two_days_ago_cost_end = 0
+
         payload = {"text": f" Execution Time: {current_time.strftime('%d %B %Y  %H:%M:%S')}\
         \nAccount ID: {lambda_arn}\n\
         \nToday spent ({current_time.strftime('%d %B')}): {today_cost_end-yesterd_cost_end:.2f} USD\

@@ -21,8 +21,9 @@ count of all points: 2
 --END for this Calculation--
 
 
-TODAY]:         2023-05-24                        0.80 USD
-[:перекидной_календарь:YESTERDAY]:      2023-05-23        1.55 USD
-[:перекидной_календарь:FIRST DAY]:       2023-05-01       0.21 USD
-[:перекидной_календарь:CUR MONTH]:       2023-05-01 to 2023-05-31     102.11 USD
-[:перекидной_календарь:PREV MONTH]:     2023-04-01 to 2023-04-30      10.33 USD
+----start: 2023-05-24 19:27:59.031305 start printing Datapoints----
+----END  : 2023-05-25 15:27:59.031305 END ----
+count of all points: 3 ,period 3600
+104.47 103.7 103.7
+--END for this Calculation-- DELTA_TIME_HOURS	20
+PERIOD_DATA_POINTS	3600
