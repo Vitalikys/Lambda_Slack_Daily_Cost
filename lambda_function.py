@@ -24,18 +24,16 @@ def lambda_handler(event, context):
         end_of_prev_month  = start_of_prev_month.replace(day=1, hour=0, minute=0) + relativedelta(months=1)
 
         # calculate costs in USD
-        today_cost      = day_bills.get_total_cost(start_time_last24h, current_time)
-        yesterd_cost    = day_bills.get_total_cost(yesterday_start, yesterday_ends)
-        prev_month_cost = 0 # day_bills.get_total_cost(start_of_prev_month, end_of_prev_month)
-        current_month   = day_bills.get_total_cost(end_of_prev_month, current_time)
+        # today_cost      = day_bills.get_total_cost(start_time_last24h, current_time)
+        # yesterd_cost    = day_bills.get_total_cost(yesterday_start, yesterday_ends)
+        # prev_month_cost = 0 # day_bills.get_total_cost(start_of_prev_month, end_of_prev_month)
+        current_month   = day_bills.get_total_cost(current_time-timedelta(hours=1), current_time)
 
-        payload = {"text": f" Execution Time: {current_time.strftime('%d %B %Y  %H:%M:%S')} \n \n\
-        Last 24 hours ({current_time.strftime('%d %B')}): {today_cost} USD \n\
-        Yesterday ({yesterday_start.strftime('%d %B')}) : {yesterd_cost} USD \n\
-        Current month  ({current_time.strftime('%B')}): {current_month} USD \n\
-        Previous month ({start_of_prev_month.strftime('%B')}): {prev_month_cost} USD \n\
-        account ID: {lambda_arn}"
-                   }
+        payload = {"text": f" Execution Time: {current_time.strftime('%d %B %Y  %H:%M:%S')} \n \
+                account ID: {lambda_arn} \n\n\
+                Current month  ({current_time.strftime('%B')}): {current_month} USD \n\
+                "
+                }
         # Print timePoints LOCALLY
         print('--------- Printing DATES - TimePoints: -------------')
         print('current time: ', current_time)
