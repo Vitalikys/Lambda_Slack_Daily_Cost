@@ -32,8 +32,8 @@ class DailyCostsBills:
             }],
             StartTime=start_time,
             EndTime=end_time,
-            # Period=1800,  # 0.5 hours  # in result would be maximum 4 points
-            Period=3600,  # 1 hours    # in result would be maximum 4 points
+            Period=1800,  # 0.5 hours  # in result would be maximum 4 points
+            # Period=3600,  # 1 hours    # in result would be maximum 4 points
             # Period=21600,  # 6 hours
             # Period=43200, # 12 hours
             # Period=86400,  # 24 hours
@@ -43,7 +43,7 @@ class DailyCostsBills:
         day_costs = 0
         data_points = responce["Datapoints"]
 
-        print( '\n----start:', start_time, 'start printing Datapoints----')
+        print('\n----start:', start_time, 'start printing Datapoints----')
         print('count of all points:', len(data_points)) # print for debugging
 
         # Main part to calculate /get one cost of Datapoints
@@ -51,5 +51,6 @@ class DailyCostsBills:
             return day_costs
         for item in data_points:
             print(item)  # print for debugging
-        day_costs = round(data_points[0]["Maximum"], 2)
-        return day_costs
+
+        one_dp_max = max([item["Maximum"] for item in data_points])
+        return round(one_dp_max, 2)
