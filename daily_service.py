@@ -49,7 +49,7 @@ class DailyCostsBills:
 
         # Main part to calculate /get one cost of Datapoints
         for item in data_points:
-            print(item)  # print for debugging
+            print(item['Maximum'], end=' ')  # print for debugging
         if len(data_points) == 0:
             return day_costs
         print('\n--END for this Calculation--\n')
