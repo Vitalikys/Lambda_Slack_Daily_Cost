@@ -7,11 +7,17 @@ from dateutil.relativedelta import relativedelta
 from daily_service import DailyCostsBills
 
 # Environment variables (we set them on AWS_UI->Lambda->Functions->Configurations
-url_slack = os.environ['SLACK_URL']
-period= int(os.environ['PERIOD_DATA_POINTS'])
-DELTA_TIME = timedelta(hours=3) # Delta time period. For this period we take/Gather all Datapoints
+url_slack  = os.environ['SLACK_URL']
+period     = int(os.environ['PERIOD_DATA_POINTS'])
+DELTA_TIME = timedelta(hours=int(os.environ['DELTA_TIME_HOURS'])) # Delta time period. For this period we take/Gather all Datapoints
 
 day_bills = DailyCostsBills()
+
+
+def calculate(end_time_point, cls_obj=day_bills, delta_time=DELTA_TIME, dp_period=period):
+    cost = cls_obj.get_total_cost(end_time_point - delta_time, end_time_point, dp_period)
+    return round(cost, 2)
+
 
 def lambda_handler(event, context):
     try:
@@ -26,12 +32,12 @@ def lambda_handler(event, context):
 
         # calculate costs in USD.
         # Get bills for ENDs of the day, then we calculate difference between this day bills.
-        today_cost_end        = day_bills.get_total_cost(current_time - DELTA_TIME, current_time, period)
-        yesterd_cost_end      = day_bills.get_total_cost(yesterday_ends_time- DELTA_TIME, yesterday_ends_time, period)
-        two_days_ago_cost_end = day_bills.get_total_cost(two_days_ago_end_time - DELTA_TIME, two_days_ago_end_time, period)
+        today_cost_end        = calculate(current_time)
+        yesterd_cost_end      = calculate(yesterday_ends_time)
+        two_days_ago_cost_end = calculate(two_days_ago_end_time)
 
-        prev_month_cost = day_bills.get_total_cost(end_for_prev_month - DELTA_TIME, end_for_prev_month, period)
-        current_month   = day_bills.get_total_cost(current_time-DELTA_TIME, current_time, period)
+        prev_month_cost = calculate(end_for_prev_month)
+        current_month   = calculate(current_time)
 
         payload = {"text": f" Execution Time: {current_time.strftime('%d %B %Y  %H:%M:%S')}\
         \nAccount ID: {lambda_arn}\n\

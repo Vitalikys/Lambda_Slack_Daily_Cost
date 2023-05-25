@@ -1,0 +1,28 @@
+Period - 3600 # 1 HOUR
+----start: 2023-05-23 10:36:33.114225 start printing Datapoints----
+----END  : 2023-05-25 10:36:33.114225 END ----
+count of all points: 8
+{'Timestamp': datetime.datetime(2023, 5, 24, 6, 54, tzinfo=tzlocal()), 'Average': 102.11, 'Sum': 102.11, 'Maximum': 102.11, 'Unit': 'None'}
+{'Timestamp': datetime.datetime(2023, 5, 24, 13, 54, tzinfo=tzlocal()), 'Average': 102.9, 'Sum': 102.9, 'Maximum': 102.9, 'Unit': 'None'}
+{'Timestamp': datetime.datetime(2023, 5, 24, 20, 54, tzinfo=tzlocal()), 'Average': 103.7, 'Sum': 103.7, 'Maximum': 103.7, 'Unit': 'None'}
+{'Timestamp': datetime.datetime(2023, 5, 24, 0, 54, tzinfo=tzlocal()), 'Average': 102.11, 'Sum': 102.11, 'Maximum': 102.11, 'Unit': 'None'}
+{'Timestamp': datetime.datetime(2023, 5, 23, 15, 54, tzinfo=tzlocal()), 'Average': 101.31, 'Sum': 101.31, 'Maximum': 101.31, 'Unit': 'None'}
+{'Timestamp': datetime.datetime(2023, 5, 23, 20, 54, tzinfo=tzlocal()), 'Average': 101.31, 'Sum': 101.31, 'Maximum': 101.31, 'Unit': 'None'}
+{'Timestamp': datetime.datetime(2023, 5, 25, 9, 54, tzinfo=tzlocal()), 'Average': 104.47, 'Sum': 104.47, 'Maximum': 104.47, 'Unit': 'None'}
+{'Timestamp': datetime.datetime(2023, 5, 25, 0, 54, tzinfo=tzlocal()), 'Average': 103.7, 'Sum': 103.7, 'Maximum': 103.7, 'Unit': 'None'}
+
+
+Period - 86400  ( 24hour)
+----start: 2023-05-23 10:59:17.133055 start printing Datapoints----
+----END  : 2023-05-25 10:59:17.133055 END ----
+count of all points: 2
+{'Timestamp': datetime.datetime(2023, 5, 23, 10, 59, tzinfo=tzlocal()), 'Average': 101.71000000000001, 'Sum': 406.84000000000003, 'Maximum': 102.11, 'Unit': 'None'}
+{'Timestamp': datetime.datetime(2023, 5, 24, 10, 59, tzinfo=tzlocal()), 'Average': 103.6925, 'Sum': 414.77, 'Maximum': 104.47, 'Unit': 'None'}
+--END for this Calculation--
+
+
+TODAY]:         2023-05-24                        0.80 USD
+[:перекидной_календарь:YESTERDAY]:      2023-05-23        1.55 USD
+[:перекидной_календарь:FIRST DAY]:       2023-05-01       0.21 USD
+[:перекидной_календарь:CUR MONTH]:       2023-05-01 to 2023-05-31     102.11 USD
+[:перекидной_календарь:PREV MONTH]:     2023-04-01 to 2023-04-30      10.33 USD
