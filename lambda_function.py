@@ -27,12 +27,12 @@ def lambda_handler(event, context):
         # today_cost      = day_bills.get_total_cost(start_time_last24h, current_time)
         # yesterd_cost    = day_bills.get_total_cost(yesterday_start, yesterday_ends)
         # prev_month_cost = 0 # day_bills.get_total_cost(start_of_prev_month, end_of_prev_month)
-        current_month   = day_bills.get_total_cost(current_time-timedelta(hours=2), current_time)
+        current_month   = day_bills.get_total_cost(current_time-timedelta(hours=5), current_time)
 
-        payload = {"text": f" Execution Time: {current_time.strftime('%d %B %Y  %H:%M:%S')} \n \
-                account ID: {lambda_arn} \n\n\
-                Current month  ({current_time.strftime('%B')}): {current_month} USD \n\
-                "
+        payload = {"text": f" Execution Time: {current_time.strftime('%d %B %Y  %H:%M:%S')}\
+        \n account ID: {lambda_arn}\n\
+        \nCurrent month  ({current_time.strftime('%B')}): {current_month} USD\
+        "
                 }
         # Print timePoints LOCALLY
         print('--------- Printing DATES - TimePoints: -------------')

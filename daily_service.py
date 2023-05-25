@@ -40,6 +40,9 @@ class DailyCostsBills:
             Statistics=['Maximum']  # ['Sum']
             # Statistics=['Average']
         )
+        print('======================')
+        print(responce)
+        print('======================')
         day_costs = 0
         data_points = responce["Datapoints"]
 
@@ -47,10 +50,10 @@ class DailyCostsBills:
         print('count of all points:', len(data_points)) # print for debugging
 
         # Main part to calculate /get one cost of Datapoints
-        if len(data_points) == 0:
-            return day_costs
         for item in data_points:
             print(item)  # print for debugging
+        if len(data_points) == 0:
+            return day_costs
 
         one_dp_max = max([item["Maximum"] for item in data_points])
         return round(one_dp_max, 2)
