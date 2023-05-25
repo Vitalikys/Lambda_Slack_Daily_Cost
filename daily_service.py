@@ -16,7 +16,7 @@ class DailyCostsBills:
             self._cloud_watch_client = boto3.client("cloudwatch", region_name=self.region)
         return self._cloud_watch_client
 
-    def get_total_cost(self, start_time, end_time):
+    def get_total_cost(self, start_time, end_time, period=3600):
         """
         method to calculate AWS costs between two points
         :param start_time: start time point
@@ -32,17 +32,14 @@ class DailyCostsBills:
             }],
             StartTime=start_time,
             EndTime=end_time,
-            Period=1800,  # 0.5 hours  # in result would be maximum 4 points
-            # Period=3600,  # 1 hours    # in result would be maximum 4 points
+            # Period=1800,  # 0.5 hours  # in result would be maximum 4 points
+            Period=period,  # 1 hours    # in result would be maximum 4 points
             # Period=21600,  # 6 hours
             # Period=43200, # 12 hours
             # Period=86400,  # 24 hours
             Statistics=['Maximum', 'Average', 'Sum']  # ['Sum']
             # Statistics=['Average']
         )
-        print('======================')
-        print(responce)
-        print('======================')
         day_costs = 0
         data_points = responce["Datapoints"]
 
@@ -55,6 +52,7 @@ class DailyCostsBills:
             print(item)  # print for debugging
         if len(data_points) == 0:
             return day_costs
+        print('\n--END for this Calculation--\n')
 
         one_dp_max = max([item["Maximum"] for item in data_points])
         return round(one_dp_max, 2)

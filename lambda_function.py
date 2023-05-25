@@ -6,12 +6,14 @@ from dateutil.relativedelta import relativedelta
 
 from daily_service import DailyCostsBills
 
-day_bills = DailyCostsBills()
+# Environment variables (we set them on AWS_UI->Lambda->Functions->Configurations
 url_slack = os.environ['SLACK_URL']
+period= os.environ['PERIOD_DATA_POINTS']
 
 
 def lambda_handler(event, context):
     try:
+        day_bills = DailyCostsBills()
         # get account ID
         lambda_arn = context.invoked_function_arn.split(':')[-3]
         # definition timepoints for calc periods
@@ -27,7 +29,7 @@ def lambda_handler(event, context):
         # today_cost      = day_bills.get_total_cost(start_time_last24h, current_time)
         # yesterd_cost    = day_bills.get_total_cost(yesterday_start, yesterday_ends)
         # prev_month_cost = 0 # day_bills.get_total_cost(start_of_prev_month, end_of_prev_month)
-        current_month   = day_bills.get_total_cost(current_time-timedelta(days=2), current_time)
+        current_month   = day_bills.get_total_cost(current_time-timedelta(days=2), current_time, period)
 
         payload = {"text": f" Execution Time: {current_time.strftime('%d %B %Y  %H:%M:%S')}\
         \nAccount ID: {lambda_arn}\n\
