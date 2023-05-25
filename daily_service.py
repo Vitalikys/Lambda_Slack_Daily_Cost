@@ -37,7 +37,7 @@ class DailyCostsBills:
             # Period=21600,  # 6 hours
             # Period=43200, # 12 hours
             # Period=86400,  # 24 hours
-            Statistics=['Maximum']  # ['Sum']
+            Statistics=['Maximum', 'Average', 'Sum']  # ['Sum']
             # Statistics=['Average']
         )
         print('======================')
@@ -47,6 +47,7 @@ class DailyCostsBills:
         data_points = responce["Datapoints"]
 
         print('\n----start:', start_time, 'start printing Datapoints----')
+        print('\n----END  :', end_time, 'END ----')
         print('count of all points:', len(data_points)) # print for debugging
 
         # Main part to calculate /get one cost of Datapoints
