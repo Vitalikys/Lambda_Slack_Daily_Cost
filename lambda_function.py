@@ -8,7 +8,7 @@ from daily_service import DailyCostsBills
 
 # Environment variables (we set them on AWS_UI->Lambda->Functions->Configurations
 url_slack = os.environ['SLACK_URL']
-period= os.environ['PERIOD_DATA_POINTS']
+period= int(os.environ['PERIOD_DATA_POINTS'])
 
 
 def lambda_handler(event, context):
