@@ -15,8 +15,7 @@ day_bills = DailyCostsBills()
 
 
 def calculate(end_time_point, cls_obj=day_bills, delta_time=DELTA_TIME, dp_period=period):
-    cost = cls_obj.get_total_cost(end_time_point - delta_time, end_time_point, dp_period)
-    return round(cost, 2)
+    return cls_obj.get_total_cost(end_time_point - delta_time, end_time_point, dp_period)
 
 
 def lambda_handler(event, context):
@@ -36,15 +35,15 @@ def lambda_handler(event, context):
         yesterd_cost_end      = calculate(yesterday_ends_time)
         two_days_ago_cost_end = calculate(two_days_ago_end_time)
 
-        prev_month_cost = calculate(end_for_prev_month)
         current_month   = calculate(current_time)
+        prev_month_cost = calculate(end_for_prev_month)
 
         payload = {"text": f" Execution Time: {current_time.strftime('%d %B %Y  %H:%M:%S')}\
         \nAccount ID: {lambda_arn}\n\
-        \nToday spent ({current_time.strftime('%d %B')}): {today_cost_end-yesterd_cost_end} USD\
-        \nYesterday spent({yesterday_ends_time.strftime('%d %B')}) : {yesterd_cost_end-two_days_ago_cost_end} USD\
-        \nCurrent month  ({current_time.strftime('%B')}): {current_month} USD\
-        \nPrevious month ({end_for_prev_month.strftime('%B')}): {prev_month_cost} USD\
+        \nToday spent ({current_time.strftime('%d %B')}): {today_cost_end-yesterd_cost_end:.2f} USD\
+        \nYesterday spent({yesterday_ends_time.strftime('%d %B')}) : {yesterd_cost_end-two_days_ago_cost_end:.2f} USD\
+        \nCurrent month  ({current_time.strftime('%B')}): {current_month:.2f} USD\
+        \nPrevious month ({end_for_prev_month.strftime('%B')}): {prev_month_cost:.2f} USD\
         "}
 
         # Print timePoints LOCALLY
@@ -53,7 +52,7 @@ def lambda_handler(event, context):
         print('yesterday_ends_time : ', yesterday_ends_time)
         print('two_days_ago_end_time: ', two_days_ago_end_time)
         print('End prev month  :', end_for_prev_month)
-        print('costs three costs - day by day', two_days_ago_cost_end, yesterd_cost_end, today_cost_end)
+        print('costs three days - day by day: ', two_days_ago_cost_end, yesterd_cost_end, today_cost_end)
         print('----------- END Printing  TimePoints ---------------')
         # Sending to Slack group
         requests.post(
