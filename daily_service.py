@@ -45,7 +45,7 @@ class DailyCostsBills:
 
         print('\n----start:', start_time, 'start printing Datapoints----')
         print('\n----END  :', end_time, 'END ----')
-        print('count of all points:', len(data_points)) # print for debugging
+        print('count of all points:', len(data_points), ',period', period) # print for debugging
 
         # Main part to calculate /get one cost of Datapoints
         for item in data_points:

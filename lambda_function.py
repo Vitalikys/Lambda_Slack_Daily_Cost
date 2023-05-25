@@ -31,9 +31,9 @@ def lambda_handler(event, context):
 
         # calculate costs in USD.
         # Get bills for ENDs of the day, then we calculate difference between this day bills.
-        today_cost_end        = calculate(current_time)
-        yesterd_cost_end      = calculate(yesterday_ends_time)
-        two_days_ago_cost_end = calculate(two_days_ago_end_time)
+        today_cost_end        = round(calculate(current_time), 2)
+        yesterd_cost_end      = round(calculate(yesterday_ends_time), 2)
+        two_days_ago_cost_end = round(calculate(two_days_ago_end_time), 2)
 
         current_month   = calculate(current_time)
         prev_month_cost = calculate(end_for_prev_month)
