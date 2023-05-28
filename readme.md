@@ -7,6 +7,13 @@
 - crontab is disabled (No EventBridge)
 
 
-Branch - "Stage-ci-cd" is for Jenkins CI-CD
+### Branch - "Stage-ci-cd" is for Jenkins CI-CD
 
-Using scripts files for Pipeline
+#### Using scripts files for Pipeline
+
+need to install AWS-cli on Jenkins-Master EC2 Server
+
+```shell
+sudo apt install awscli
+aws configure # add credentials
+```
