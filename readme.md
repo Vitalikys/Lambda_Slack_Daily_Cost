@@ -4,7 +4,9 @@
 
 
 - application to send notification to Slack channel.
-- crontab is disable (No EventBridge)
+- crontab is disabled (No EventBridge)
 
 
-Second branch - "Dev" is for Jenkins CI-CD
+Branch - "Stage-ci-cd" is for Jenkins CI-CD
+
+Using scripts files for Pipeline
