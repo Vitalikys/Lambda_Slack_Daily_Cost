@@ -9,8 +9,6 @@ pipeline{
                 ./zip_part.sh
                 '''}
             }
-        }
-
 
         stage('Push to S3 Bucket, update Lambda'){
             steps {
@@ -19,11 +17,6 @@ pipeline{
                 ./cd_aws.sh
                 '''}
             }
-        }
-
 
     }
 }
-
-
-
