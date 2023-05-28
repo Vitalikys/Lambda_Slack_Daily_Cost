@@ -6,7 +6,7 @@ pipeline{
             steps {
                 sh '''
                 chmod +x scripts/ci_zip_part.sh
-                ./scripts/zip_part.sh
+                ./scripts/ci_zip_part.sh
                 '''}
             }
 
