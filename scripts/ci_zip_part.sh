@@ -16,3 +16,4 @@ zip -r cost_notif_$BUILD_NUMBER ./ -x *.git*  -x *.dist-info
 ls -la
 
 echo '------------------  END application commands ------------------'
+
