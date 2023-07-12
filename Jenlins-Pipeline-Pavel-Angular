@@ -1,0 +1,42 @@
+pipeline {
+    agent any
+    tools {nodejs "node_16.20.1"}
+    environment {
+        DIR_PATH   = 'dist/instagram-two/'
+        BUCKET_URI = 's3://static-site-vitalii/'
+    }
+
+    stages {
+        stage('Git Clone Project') {
+            steps {
+                // Git clone Repository. From branch Vitaliy
+                checkout([$class: 'GitSCM', branches: [[name: '*/vitaliy']],
+                userRemoteConfigs: [[url: 'git@github.com:Batersp/TODO_ANG_PRIVATE.git/',
+                credentialsId: 'ssh-git-priv']]
+                ])
+                sh 'ls -la'
+            }
+        }
+        
+        
+        stage('Install Packages') {
+            environment { PATH = "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin"}
+            
+            steps { 
+                // Install Packages, Build Project to Directory
+                sh 'npm install' 
+                sh 'ng build'
+                sh 'ls -la'
+            }
+        }
+        stage('Upload to S3') {
+            steps {
+                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', 
+                credentialsId: 'aws-cred']]) {
+                    sh 'aws s3 ls'
+                    sh 'aws s3 sync ${DIR_PATH} ${BUCKET_URI} --acl public-read'
+            }
+        }
+    }
+  }
+}
