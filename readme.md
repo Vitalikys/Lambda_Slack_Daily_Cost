@@ -5,3 +5,6 @@
 
 - application to send notification to Slack channel.
 - crontab is disable (No EventBridge)
+
+- Jenkins Files in another Branch
+- For Angular Pavel CI-CD
