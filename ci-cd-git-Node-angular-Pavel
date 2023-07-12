@@ -1,0 +1,62 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Node.js CI
+
+on:
+  push:
+    branches: [ "master" ]
+#   pull_request:
+#     branches: [ "master" ]
+
+jobs:
+  my-ci-build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - name: Git clone our repo
+      uses: actions/checkout@v3 
+      
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    
+    - name: Show first resuls (cloned directory)
+      run: ls -la    
+
+    - name: Install Latest Angular
+#     для глобального встановлення оновленої версії Angular CLI з репозиторію NPM.
+      run: npm install -g @angular/cli@12.2.7
+      
+#     - name: Install Latest Angular Version-2     
+#       uses: mayurrawte/github-angular-actions@v1.1.0
+#       with:
+#         version: 12.2.7
+        
+    - name: install dependencies
+      run:  npm ci
+      
+    - name: build project; Creating /dist folder
+      run: ng build
+#     - run: npm run build --if-present
+#     - run: npm test
+    - name: Show resuls (list of files dist/ directory)
+      run: ls -la dist/instagram-two/
+      
+    - name: Configure my AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id    :  ${{ secrets.MY_AWS_ACCESS_KEY }}
+        aws-secret-access-key:  ${{ secrets.MY_AWS_SECRET_ACCESS_KEY }}
+        aws-region           :  ${{ secrets.AWS_REGION_NAME }}
+   
+    - name: Copy Deployment Files to S3 Bucket
+#     run: aws s3 cp   dist/instagram-two/ ${{ secrets.MY_S3_BUCKET_URI }} --recursive 
+      run: aws s3 sync dist/instagram-two/ ${{ secrets.MY_S3_BUCKET_URI }} --acl public-read
